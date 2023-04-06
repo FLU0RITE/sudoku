@@ -9,9 +9,12 @@
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="359dp"
-        android:layout_height="370dp"
-        android:layout_margin="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="250dp"
         android:columnCount="3"
         android:rowCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -1138,18 +1141,13 @@
 
     <GridLayout
         android:id="@+id/inputLayout"
-        android:layout_width="413dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
         android:columnCount="9"
         android:orientation="horizontal"
-        app:layout_constrainedHeight="false"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clock"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/delete_b">
 
         <Button
             android:id="@+id/one"
@@ -1259,15 +1257,13 @@
 
     <Chronometer
         android:id="@+id/clock"
-        android:layout_width="87dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="208dp"
-        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:textColor="@color/red"
         android:textSize="25dp"
-        app:layout_constraintBaseline_creator="@+id/gridLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/new_b"
+        app:layout_constraintEnd_toStartOf="@+id/mistake" />
 
     <Button
         android:id="@+id/mistake"
