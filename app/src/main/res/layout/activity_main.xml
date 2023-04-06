@@ -1261,7 +1261,7 @@
         android:id="@+id/clock"
         android:layout_width="87dp"
         android:layout_height="51dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="208dp"
         android:textColor="@color/white"
         android:textSize="25dp"
