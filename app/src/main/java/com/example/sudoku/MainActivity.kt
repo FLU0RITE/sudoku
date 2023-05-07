@@ -7,7 +7,6 @@ import com.example.sudoku.databinding.ActivityMainBinding
 import kotlin.random.Random
 
 
-
 class MainActivity : AppCompatActivity() {
     var originBoard = Array(9) { IntArray(9) { 0 } }
     var board = Array(9) { IntArray(9) { 0 } }
