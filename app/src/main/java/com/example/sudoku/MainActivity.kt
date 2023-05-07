@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     var board = Array(9) { IntArray(9) { 0 } }
     var row = Array(10) { IntArray(10) { 0 } }
     var col = Array(10) { IntArray(10) { 0 } }
+
     var diag = Array(10) { IntArray(10) { 0 } }
     var terminateFlag = false
 
