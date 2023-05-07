@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         // 바인딩 객체 획득
         val binding = ActivityMainBinding.inflate(layoutInflater)
         // 화면 출력
+
         setContentView(binding.root)
         binding.newB.setOnClickListener(){
             originBoard = Array(9) { IntArray(9) { 0 } }
