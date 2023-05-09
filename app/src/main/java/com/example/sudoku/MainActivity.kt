@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     var terminateFlag = false
     var se = 1
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
