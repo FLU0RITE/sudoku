@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     var col = Array(10) { IntArray(10) { 0 } }
     var diag = Array(10) { IntArray(10) { 0 } }
     var terminateFlag = false
-
+    var se = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
