@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             boardInit()
         }
         binding.hintB.setOnClickListener{
-            binding.clock.stop()
+
         }
         binding.exitB.setOnClickListener{
             finish()
