@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.KeyEvent
+import android.widget.Button
 import com.example.sudoku.databinding.ActivityMainBinding
 import kotlin.random.Random
 
@@ -118,15 +119,90 @@ class MainActivity : AppCompatActivity() {
             board[i/10][i%10] = 0
         }
 
-        binding.b11.text = if (board[0][0] == 0) "" else "${board[0][0]}"
-        binding.b12.text = if (board[0][1] == 0) "" else "${board[0][1]}"
-        binding.b13.text = if (board[0][2] == 0) "" else "${board[0][2]}"
-        binding.b14.text = if (board[1][0] == 0) "" else "${board[1][0]}"
-        binding.b15.text = if (board[1][1] == 0) "" else "${board[1][1]}"
-        binding.b16.text = if (board[1][2] == 0) "" else "${board[1][2]}"
-        binding.b17.text = if (board[2][0] == 0) "" else "${board[2][0]}"
-        binding.b18.text = if (board[2][1] == 0) "" else "${board[2][1]}"
-        binding.b19.text = if (board[2][2] == 0) "" else "${board[2][2]}"
+
+        val used = arrayListOf<Button>()
+        val use = arrayListOf<Button>()
+        val hi = arrayListOf<Button>(
+            binding.b11,binding.b12,binding.b13,binding.b14,binding.b15,binding.b16,binding.b17,binding.b18,binding.b19,
+            binding.b21,binding.b22,binding.b23,binding.b24,binding.b25,binding.b26,binding.b27,binding.b28,binding.b29,
+            binding.b31,binding.b32,binding.b33,binding.b34,binding.b35,binding.b36,binding.b37,binding.b38,binding.b39,
+            binding.b41,binding.b42,binding.b43,binding.b44,binding.b45,binding.b46,binding.b47,binding.b48,binding.b49,
+            binding.b51,binding.b52,binding.b53,binding.b54,binding.b55,binding.b56,binding.b57,binding.b58,binding.b59,
+            binding.b61,binding.b62,binding.b63,binding.b64,binding.b65,binding.b66,binding.b67,binding.b68,binding.b69,
+            binding.b71,binding.b72,binding.b73,binding.b74,binding.b75,binding.b76,binding.b77,binding.b78,binding.b79,
+            binding.b81,binding.b82,binding.b83,binding.b84,binding.b85,binding.b86,binding.b87,binding.b88,binding.b89,
+            binding.b91,binding.b92,binding.b93,binding.b94,binding.b95,binding.b96,binding.b97,binding.b98,binding.b99,
+        )
+        var start = 0
+        val buttonColor = arrayListOf<Int>()
+        fun keys(selectedButton: Button){
+            var trats = 0
+            var buttonColorSize = buttonColor.size.toInt()
+
+            selectedButton.setOnClickListener{
+                if (hi.contains(selectedButton)){
+                    use.add(selectedButton)
+                    use.remove(use[0])
+                }
+                else{
+                    used.add(selectedButton)
+                    used.remove(used[0])
+                }
+                selectedButton.setTextColor(resources.getColor(R.color.black))
+                selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+
+                binding.one.setOnClickListener {
+                    selectedButton.text = "1";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.two.setOnClickListener {
+                    selectedButton.text = "2";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.three.setOnClickListener {
+                    selectedButton.text = "3";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.four.setOnClickListener {
+                    selectedButton.text = "4";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.five.setOnClickListener {
+                    selectedButton.text = "5";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.six.setOnClickListener {
+                    selectedButton.text = "6";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.seven.setOnClickListener {
+                    selectedButton.text = "7";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.eight.setOnClickListener {
+                    selectedButton.text = "8";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.nine.setOnClickListener {
+                    selectedButton.text = "9";start = 0;selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                    start = 0;buttonColorSize = buttonColor.size.toInt();trats = 0
+                }
+                binding.deleteB.setOnClickListener {
+                    selectedButton.text = ""
+                }
+            }
+        }
+
+        binding.b11.text = if (board[0][0] == 0) "" else "${board[0][0]}"; if (board[0][0]==0) keys(selectedButton = binding.b11)
+        binding.b12.text = if (board[0][1] == 0) "" else "${board[0][1]}"; if (board[0][1]==0) keys(selectedButton = binding.b12)
+        binding.b13.text = if (board[0][2] == 0) "" else "${board[0][2]}"; if (board[0][2]==0) keys(selectedButton = binding.b13)
+        binding.b14.text = if (board[1][0] == 0) "" else "${board[1][0]}"; if (board[1][0]==0) keys(selectedButton = binding.b14)
+        binding.b15.text = if (board[1][1] == 0) "" else "${board[1][1]}"; if (board[1][1]==0) keys(selectedButton = binding.b15)
+        binding.b16.text = if (board[1][2] == 0) "" else "${board[1][2]}"; if (board[1][2]==0) keys(selectedButton = binding.b16)
+        binding.b17.text = if (board[2][0] == 0) "" else "${board[2][0]}"; if (board[2][0]==0) keys(selectedButton = binding.b17)
+        binding.b18.text = if (board[2][1] == 0) "" else "${board[2][1]}"; if (board[2][1]==0) keys(selectedButton = binding.b18)
+        binding.b19.text = if (board[2][2] == 0) "" else "${board[2][2]}"; if (board[2][2]==0) keys(selectedButton = binding.b19)
+
         //블록 1
         binding.b21.text =  if (board[0][3] == 0) "" else "${board[0][3]}"
         binding.b22.text =  if (board[0][4] == 0) "" else "${board[0][4]}"
