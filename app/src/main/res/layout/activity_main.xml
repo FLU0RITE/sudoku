@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@color/black"
     tools:context=".MainActivity">
 
     <GridLayout
@@ -1103,7 +1103,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="삭제"
+        android:textColor="@color/white"
+        android:text="DELETE"
         app:layout_constraintEnd_toEndOf="@+id/gridLayout"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
 
@@ -1112,6 +1113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:textColor="@color/white"
         android:text="나가기"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="@+id/gridLayout" />
@@ -1122,6 +1124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="4dp"
+        android:textColor="@color/white"
         android:text="힌트"
         app:layout_constraintStart_toStartOf="@+id/gridLayout"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
@@ -1133,6 +1136,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="8dp"
+        android:textColor="@color/white"
         android:text="새 게임"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toStartOf="@+id/clock"
@@ -1143,7 +1147,7 @@
         android:id="@+id/inputLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="20dp"
         android:columnCount="9"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
@@ -1157,7 +1161,7 @@
             android:layout_column="0"
             android:layout_margin="2dp"
             android:text="1"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1169,7 +1173,7 @@
             android:layout_column="1"
             android:layout_margin="2dp"
             android:text="2"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1181,7 +1185,7 @@
             android:layout_column="2"
             android:layout_margin="2dp"
             android:text="3"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1193,7 +1197,7 @@
             android:layout_column="3"
             android:layout_margin="2dp"
             android:text="4"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1205,7 +1209,7 @@
             android:layout_column="4"
             android:layout_margin="2dp"
             android:text="5"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1215,7 +1219,7 @@
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:text="6"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1225,7 +1229,7 @@
             android:layout_height="match_parent"
             android:layout_margin="2dp"
             android:text="7"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1237,7 +1241,7 @@
             android:layout_column="7"
             android:layout_margin="2dp"
             android:text="8"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1249,7 +1253,7 @@
             android:layout_column="8"
             android:layout_margin="2dp"
             android:text="9"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -1260,7 +1264,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
-        android:textColor="@color/teal_700"
+        android:textColor="@color/white"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/new_b"
         app:layout_constraintEnd_toStartOf="@+id/mistake" />
@@ -1270,6 +1274,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="1dp"
+        android:textColor="@color/white"
         android:text="실수 : 0"
         app:layout_constraintBaseline_toBaselineOf="@+id/exit_b"
         app:layout_constraintEnd_toStartOf="@+id/exit_b" />
