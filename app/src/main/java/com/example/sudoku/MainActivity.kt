@@ -146,7 +146,26 @@ class MainActivity : AppCompatActivity() {
             board[i/10][i%10] = 0
         }
         // 무작위 51개 비우기
-
+        fun blockColor(selectedButton: Button, row:Int, col:Int){
+            if (row <= 2 && col <= 2){
+                selectedButton.setBackgroundResource(R.drawable.odd)
+            }
+            else if(row <= 2 && col >= 6){
+                selectedButton.setBackgroundResource(R.drawable.odd)
+            }
+            else if(row >= 3 && col >= 3 && row <= 5 && col <= 5){
+                selectedButton.setBackgroundResource(R.drawable.odd)
+            }
+            else if(row >= 6 && col <= 2){
+                selectedButton.setBackgroundResource(R.drawable.odd)
+            }
+            else if(row >= 6 && col >= 6){
+                selectedButton.setBackgroundResource(R.drawable.odd)
+            }
+            else{
+                selectedButton.setBackgroundResource(R.drawable.even)
+            }
+        }
         fun keys(selectedButton: Button, row:Int, col: Int){
             selectedButton.setOnClickListener{
 
@@ -158,8 +177,13 @@ class MainActivity : AppCompatActivity() {
                     if (originBoard[row][col] != 1){
                         mistakeCount += 1
                         binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.two.setOnClickListener {
                     selectedButton.text = "2"
@@ -167,17 +191,27 @@ class MainActivity : AppCompatActivity() {
                     if (originBoard[row][col] != 2){
                         mistakeCount += 1
                         binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.three.setOnClickListener {
                     selectedButton.text = "3"
                     board[row][col] = 3
                     if (originBoard[row][col] != 3){
-                            mistakeCount += 1
-                            binding.mistake.text = "${mistakeCount}"
+                        mistakeCount += 1
+                        binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.four.setOnClickListener {
                     selectedButton.text = "4"
@@ -185,8 +219,13 @@ class MainActivity : AppCompatActivity() {
                     if (originBoard[row][col] != 4){
                         mistakeCount += 1
                         binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.five.setOnClickListener {
                     selectedButton.text = "5"
@@ -194,8 +233,13 @@ class MainActivity : AppCompatActivity() {
                     if (originBoard[row][col] != 5){
                         mistakeCount += 1
                         binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.six.setOnClickListener {
                     selectedButton.text = "6"
@@ -203,8 +247,13 @@ class MainActivity : AppCompatActivity() {
                     if (originBoard[row][col] != 6){
                         mistakeCount += 1
                         binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.seven.setOnClickListener {
                     selectedButton.text = "7"
@@ -212,8 +261,13 @@ class MainActivity : AppCompatActivity() {
                     if (originBoard[row][col] != 7){
                         mistakeCount += 1
                         binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.eight.setOnClickListener {
                     selectedButton.text = "8"
@@ -221,9 +275,13 @@ class MainActivity : AppCompatActivity() {
                     if (originBoard[row][col] != 8){
                         mistakeCount += 1
                         binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.nine.setOnClickListener {
                     selectedButton.text = "9"
@@ -231,8 +289,13 @@ class MainActivity : AppCompatActivity() {
                     if (originBoard[row][col] != 9){
                         mistakeCount += 1
                         binding.mistake.text = "${mistakeCount}"
+                        selectedButton.setTextColor(resources.getColor(R.color.red))
+                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
                     }
-                    selectedButton.setBackgroundColor(resources.getColor(R.color.ash))
+                    else{
+                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    }
+                    blockColor(selectedButton,row,col)
                 }
                 binding.deleteB.setOnClickListener {
                     selectedButton.text = ""
@@ -240,11 +303,32 @@ class MainActivity : AppCompatActivity() {
                 }
                 binding.hintB.setOnClickListener {
                     selectedButton.text = "${originBoard[row][col]}"
+                    board[row][col] = originBoard[row][col]
+                    selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                    blockColor(selectedButton,row,col)
                 }
 
             }
         }
-
+        var buttonListB = arrayListOf<Button>(
+            binding.b11,binding.b12,binding.b13,binding.b14,binding.b15,binding.b16,binding.b17,binding.b18,binding.b19,
+            binding.b31,binding.b32,binding.b33,binding.b34,binding.b35,binding.b36,binding.b37,binding.b38,binding.b39,
+            binding.b51,binding.b52,binding.b53,binding.b54,binding.b55,binding.b56,binding.b57,binding.b58,binding.b59,
+            binding.b71,binding.b72,binding.b73,binding.b74,binding.b75,binding.b76,binding.b77,binding.b78,binding.b79,
+            binding.b91,binding.b92,binding.b93,binding.b94,binding.b95,binding.b96,binding.b97,binding.b98,binding.b99
+        )
+        var buttonListW = arrayListOf<Button>(
+            binding.b21,binding.b22,binding.b23,binding.b24,binding.b25,binding.b26,binding.b27,binding.b28,binding.b29,
+            binding.b41,binding.b42,binding.b43,binding.b44,binding.b45,binding.b46,binding.b47,binding.b48,binding.b49,
+            binding.b61,binding.b62,binding.b63,binding.b64,binding.b65,binding.b66,binding.b67,binding.b68,binding.b69,
+            binding.b81,binding.b82,binding.b83,binding.b84,binding.b85,binding.b86,binding.b87,binding.b88,binding.b89
+        )
+        for(b in buttonListB){
+            b.setTextColor(resources.getColor(R.color.black))
+        }
+        for(b in buttonListW){
+            b.setTextColor(resources.getColor(R.color.white))
+        }
         binding.b11.text = if (board[0][0] == 0) "" else "${board[0][0]}"
         if (board[0][0]==0) keys(selectedButton = binding.b11, 0,0)
         binding.b11.setBackgroundResource(R.drawable.odd)
