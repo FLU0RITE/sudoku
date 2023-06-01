@@ -16,9 +16,13 @@ class MainActivity : AppCompatActivity() {
     var row = Array(10) { IntArray(10) { 0 } }
     var col = Array(10) { IntArray(10) { 0 } }
     var diag = Array(10) { IntArray(10) { 0 } }
+    var modifyStatusA = Array(9) { IntArray(9) { 0 } }
+    var modifyFlag = 0
+    var modifiedButton = arrayListOf<Button>()
+    var mRow = -1
+    var mCol = -1
     var terminateFlag = false
     var mistakeCount = 0
-
     lateinit var binding : ActivityMainBinding
     // 화면 출력
 
@@ -112,6 +116,11 @@ class MainActivity : AppCompatActivity() {
         row = Array(10) { IntArray(10) { 0 } }
         col = Array(10) { IntArray(10) { 0 } }
         diag = Array(10) { IntArray(10) { 0 } }
+        modifyStatusA = Array(9) { IntArray(9) { 0 } }
+        modifyFlag = 0
+        modifiedButton = arrayListOf<Button>()
+        mRow = -1
+        mCol = -1
         terminateFlag = false
         mistakeCount = 0
         binding.mistake.text = "0"
@@ -135,6 +144,7 @@ class MainActivity : AppCompatActivity() {
         for (i in 0..8){
             for(j in 0..8){
                 originBoard[i][j] = board[i][j]
+                modifyStatusA[i][j] = 1
             }
         }
 
@@ -168,146 +178,205 @@ class MainActivity : AppCompatActivity() {
         }
         fun keys(selectedButton: Button, row:Int, col: Int){
             selectedButton.setOnClickListener{
-
-                selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
-
-                binding.one.setOnClickListener {
-                    selectedButton.text = "1"
-                    board[row][col] = 1
-                    if (originBoard[row][col] != 1){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                if (modifyStatusA[row][col]==1){
+                    if (modifyFlag == 0){
+                        selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                        modifiedButton.add(selectedButton)
+                        mRow = row
+                        mCol = col
+                        modifyFlag = 1
                     }
-                    else{
+                    else {
+                        blockColor(modifiedButton[0],mRow,mCol)
+                        selectedButton.setBackgroundColor(resources.getColor(R.color.blue))
+                        modifiedButton.remove(modifiedButton[0])
+                        modifiedButton.add(selectedButton)
+                        mRow = row
+                        mCol = col
+                        modifyFlag = 1
+                    }
+                    binding.one.setOnClickListener {
+                        selectedButton.text = "1"
+                        board[row][col] = 1
+                        if (originBoard[row][col] != 1){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.two.setOnClickListener {
+                        selectedButton.text = "2"
+                        board[row][col] = 2
+                        if (originBoard[row][col] != 2){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.three.setOnClickListener {
+                        selectedButton.text = "3"
+                        board[row][col] = 3
+                        if (originBoard[row][col] != 3){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.four.setOnClickListener {
+                        selectedButton.text = "4"
+                        board[row][col] = 4
+                        if (originBoard[row][col] != 4){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.five.setOnClickListener {
+                        selectedButton.text = "5"
+                        board[row][col] = 5
+                        if (originBoard[row][col] != 5){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.six.setOnClickListener {
+                        selectedButton.text = "6"
+                        board[row][col] = 6
+                        if (originBoard[row][col] != 6){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.seven.setOnClickListener {
+                        selectedButton.text = "7"
+                        board[row][col] = 7
+                        if (originBoard[row][col] != 7){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.eight.setOnClickListener {
+                        selectedButton.text = "8"
+                        board[row][col] = 8
+                        if (originBoard[row][col] != 8){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.nine.setOnClickListener {
+                        selectedButton.text = "9"
+                        board[row][col] = 9
+                        if (originBoard[row][col] != 9){
+                            mistakeCount += 1
+                            binding.mistake.text = "${mistakeCount}"
+                            selectedButton.setTextColor(resources.getColor(R.color.red))
+                            Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        }
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.deleteB.setOnClickListener {
+                        selectedButton.text = ""
+                        board[row][col] = 0
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
+                    }
+                    binding.hintB.setOnClickListener {
+                        selectedButton.text = "${originBoard[row][col]}"
+                        board[row][col] = originBoard[row][col]
                         selectedButton.setTextColor(resources.getColor(R.color.purple_500))
+                        blockColor(selectedButton,row,col)
+                        if (modifyFlag == 1){
+                            modifyFlag = 0
+                            modifiedButton.remove(modifiedButton[0])
+                        }
                     }
-                    blockColor(selectedButton,row,col)
                 }
-                binding.two.setOnClickListener {
-                    selectedButton.text = "2"
-                    board[row][col] = 2
-                    if (originBoard[row][col] != 2){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    }
-                    blockColor(selectedButton,row,col)
-                }
-                binding.three.setOnClickListener {
-                    selectedButton.text = "3"
-                    board[row][col] = 3
-                    if (originBoard[row][col] != 3){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    }
-                    blockColor(selectedButton,row,col)
-                }
-                binding.four.setOnClickListener {
-                    selectedButton.text = "4"
-                    board[row][col] = 4
-                    if (originBoard[row][col] != 4){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    }
-                    blockColor(selectedButton,row,col)
-                }
-                binding.five.setOnClickListener {
-                    selectedButton.text = "5"
-                    board[row][col] = 5
-                    if (originBoard[row][col] != 5){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    }
-                    blockColor(selectedButton,row,col)
-                }
-                binding.six.setOnClickListener {
-                    selectedButton.text = "6"
-                    board[row][col] = 6
-                    if (originBoard[row][col] != 6){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    }
-                    blockColor(selectedButton,row,col)
-                }
-                binding.seven.setOnClickListener {
-                    selectedButton.text = "7"
-                    board[row][col] = 7
-                    if (originBoard[row][col] != 7){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    }
-                    blockColor(selectedButton,row,col)
-                }
-                binding.eight.setOnClickListener {
-                    selectedButton.text = "8"
-                    board[row][col] = 8
-                    if (originBoard[row][col] != 8){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    }
-                    blockColor(selectedButton,row,col)
-                }
-                binding.nine.setOnClickListener {
-                    selectedButton.text = "9"
-                    board[row][col] = 9
-                    if (originBoard[row][col] != 9){
-                        mistakeCount += 1
-                        binding.mistake.text = "${mistakeCount}"
-                        selectedButton.setTextColor(resources.getColor(R.color.red))
-                        Toast.makeText(this, "실수 ${mistakeCount}번째!", Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    }
-                    blockColor(selectedButton,row,col)
-                }
-                binding.deleteB.setOnClickListener {
-                    selectedButton.text = ""
-                    board[row][col] = 0
-                }
-                binding.hintB.setOnClickListener {
-                    selectedButton.text = "${originBoard[row][col]}"
-                    board[row][col] = originBoard[row][col]
-                    selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                    blockColor(selectedButton,row,col)
-                }
-
             }
         }
         var buttonListB = arrayListOf<Button>(
