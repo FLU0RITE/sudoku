@@ -3,10 +3,9 @@ package com.example.sudoku.model
 import android.widget.Button
 import com.example.sudoku.databinding.ActivityMainBinding
 
-class Buttons {
-    lateinit var binding: ActivityMainBinding
+class Buttons(val binding: ActivityMainBinding) {
     fun returnButton(): List<Button> {
-        val buttonList = arrayListOf<Button>(
+        return arrayListOf(
             binding.b11,
             binding.b12,
             binding.b13,
@@ -91,6 +90,5 @@ class Buttons {
             binding.b98,
             binding.b99,
         )
-        return buttonList
     }
 }

@@ -1,5 +1,6 @@
 package com.example.sudoku.model
 
+import android.annotation.SuppressLint
 import android.media.SoundPool
 import android.os.Build.VERSION_CODES.S
 import android.os.SystemClock
@@ -7,12 +8,11 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.sudoku.R
 import com.example.sudoku.databinding.ActivityMainBinding
+import com.example.sudoku.util.App
 import kotlin.random.Random
 
-class Board {
+class Board(val binding: ActivityMainBinding) {
     var mistakeCount = 0
-
-    lateinit var binding: ActivityMainBinding
     var terminateFlag = false
     var originBoard = Array(9) { IntArray(9) { 0 } }
     var board = Array(9) { IntArray(9) { 0 } }
@@ -24,23 +24,83 @@ class Board {
     var modifiedButton = arrayListOf<Button>()
     var mRow = -1
     var mCol = -1
+    fun discriminate() {
+        if (mistakeCount >= 3) {
+            Toast.makeText(App.context(), "3회 이상 실수로 실패!", Toast.LENGTH_SHORT).show()
+        } else {
+            var successCount = 0
+            for (i in 0..8) {
+                for (j in 0..8) {
+                    if (board[i][j] != originBoard[i][j]) {
+                        Toast.makeText(App.context(), "틀렸습니다!", Toast.LENGTH_SHORT).show()
+                        successCount = 1
+                        break
+                    }
+                }
+                if (successCount == 1) break
+            }
+            if (successCount == 0) {
+                Toast.makeText(App.context(), "성공!", Toast.LENGTH_SHORT).show()
+                Board(binding).boardInitialize()
+            }
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
     fun numberButton(selectedButton: Button, row: Int, col: Int, number: Int) {
-        selectedButton.setOnClickListener {
-            selectedButton.text = "${number}"
-            board[row][col] = number
-            if (originBoard[row][col] != number) {
-                mistakeCount += 1
-                binding.mistake.text = "${mistakeCount}"
-                selectedButton.setTextColor(resources.getColor(R.color.red))
-                Toast.makeText(this, "${mistakeCount}회 실수", Toast.LENGTH_SHORT).show()
-            } else {
-                selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-            }
-            blockColor(selectedButton, row, col)
-            if (modifyFlag == 1) {
-                modifyFlag = 0
-                modifiedButton.remove(modifiedButton[0])
-            }
+        selectedButton.text = "${number}"
+        board[row][col] = number
+        if (originBoard[row][col] != number) {
+            mistakeCount += 1
+            binding.mistake.text = "${mistakeCount}"
+            selectedButton.setTextColor(R.color.red)
+            Toast.makeText(App.context(), "${mistakeCount}회 실수", Toast.LENGTH_SHORT).show()
+        } else {
+            selectedButton.setTextColor(R.color.purple_500)
+        }
+        blockColor(selectedButton, row, col)
+        if (modifyFlag == 1) {
+            modifyFlag = 0
+            modifiedButton.remove(modifiedButton[0])
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun deleteButton(selectedButton: Button, row: Int, col: Int) {
+        selectedButton.text = ""
+        board[row][col] = 0
+        blockColor(selectedButton, row, col)
+        if (modifyFlag == 1) {
+            modifyFlag = 0
+            modifiedButton.remove(modifiedButton[0])
+        }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun hintButton(selectedButton: Button, row: Int, col: Int) {
+        selectedButton.text = "${originBoard[row][col]}"
+        board[row][col] = originBoard[row][col]
+        selectedButton.setTextColor(R.color.purple_500)
+        blockColor(selectedButton, row, col)
+        if (modifyFlag == 1) {
+            modifyFlag = 0
+            modifiedButton.remove(modifiedButton[0])
+        }
+    }
+
+    fun blockColor(selectedButton: Button, row: Int, col: Int) {
+        if (row <= 2 && col <= 2) {
+            selectedButton.setBackgroundResource(R.drawable.first_box)
+        } else if (row <= 2 && col >= 6) {
+            selectedButton.setBackgroundResource(R.drawable.first_box)
+        } else if (row >= 3 && col >= 3 && row <= 5 && col <= 5) {
+            selectedButton.setBackgroundResource(R.drawable.first_box)
+        } else if (row >= 6 && col <= 2) {
+            selectedButton.setBackgroundResource(R.drawable.first_box)
+        } else if (row >= 6 && col >= 6) {
+            selectedButton.setBackgroundResource(R.drawable.first_box)
+        } else {
+            selectedButton.setBackgroundResource(R.drawable.second_box)
         }
     }
 
@@ -128,7 +188,7 @@ class Board {
             }
         }
 
-        var temp = mutableSetOf<Int>()
+        val temp = mutableSetOf<Int>()
         while (temp.size < 51) {
             temp.add(Random.nextInt(9) * 10 + Random.nextInt(9))
         }
@@ -136,26 +196,10 @@ class Board {
             board[i / 10][i % 10] = 0
         }
         // 무작위 51개 비우기
-        fun blockColor(selectedButton: Button, row: Int, col: Int) {
-            if (row <= 2 && col <= 2) {
-                selectedButton.setBackgroundResource(R.drawable.first_box)
-            } else if (row <= 2 && col >= 6) {
-                selectedButton.setBackgroundResource(R.drawable.first_box)
-            } else if (row >= 3 && col >= 3 && row <= 5 && col <= 5) {
-                selectedButton.setBackgroundResource(R.drawable.first_box)
-            } else if (row >= 6 && col <= 2) {
-                selectedButton.setBackgroundResource(R.drawable.first_box)
-            } else if (row >= 6 && col >= 6) {
-                selectedButton.setBackgroundResource(R.drawable.first_box)
-            } else {
-                selectedButton.setBackgroundResource(R.drawable.second_box)
-            }
-        }
-
 
         fun keys(selectedButton: Button, row: Int, col: Int) {
             selectedButton.setOnClickListener {
-                MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                MusicPlayer(Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
                 if (modifyStatusA[row][col] == 1) {
                     if (modifyFlag == 0) {
                         selectedButton.setBackgroundResource(R.drawable.selected_box)
@@ -173,93 +217,84 @@ class Board {
                         modifyFlag = 1
                     }
                     binding.one.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 1)
                     }
                     binding.two.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 2)
                     }
                     binding.three.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 3)
                     }
                     binding.four.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 4)
                     }
                     binding.five.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 5)
                     }
                     binding.six.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 6)
                     }
                     binding.seven.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 7)
                     }
                     binding.eight.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 8)
                     }
                     binding.nine.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectClockSound(Sounds().clock)
+                        MusicPlayer(
+                            Sounds().soundPool, binding
+                        ).playEffectClockSound(Sounds().clock)
                         numberButton(selectedButton, row, col, 9)
                     }
                     binding.deleteB.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectSound(Sounds().sound3)
-                        selectedButton.text = ""
-                        board[row][col] = 0
-                        blockColor(selectedButton, row, col)
-                        if (modifyFlag == 1) {
-                            modifyFlag = 0
-                            modifiedButton.remove(modifiedButton[0])
-                        }
+                        MusicPlayer(Sounds().soundPool, binding).playEffectSound(Sounds().sound3)
+                        deleteButton(selectedButton, row, col)
                     }
                     binding.hintB.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool).playEffectSound(Sounds().sound4)
-                        selectedButton.text = "${originBoard[row][col]}"
-                        board[row][col] = originBoard[row][col]
-                        selectedButton.setTextColor(resources.getColor(R.color.purple_500))
-                        blockColor(selectedButton, row, col)
-                        if (modifyFlag == 1) {
-                            modifyFlag = 0
-                            modifiedButton.remove(modifiedButton[0])
-                        }
+                        MusicPlayer(Sounds().soundPool, binding).playEffectSound(Sounds().sound4)
+                        hintButton(selectedButton, row, col)
                     }
                 }
             }
-
         }
 
-
-        var boardButtons = Buttons().returnButton()
+        val boardButtons = Buttons(binding).returnButton()
 
         for (b in boardButtons) {
             b.setTextAppearance(R.style.myTitleText)
         }
 
-
         for (i in 0..8) {
             for (j in 0..8) {
-                if (board[i][j] == 0) {
-                    boardButtons[i * 9 + j].isEnabled = true
-                } else {
-                    boardButtons[i * 9 + j].isEnabled = false
-                }
-            }
-        }
-
-        for (i in 0..8) {
-            for (j in 0..8) {
+                boardButtons[i * 9 + j].isEnabled = board[i][j] == 0
                 boardButtons[i * 9 + j].text = if (board[i][j] == 0) "" else "${board[i][j]}"
                 if (board[i][j] == 0) keys(selectedButton = boardButtons[i * 9 + j], i, j)
                 blockColor(boardButtons[i * 9 + j], i, j)
             }
         }
-
-
     }
 }

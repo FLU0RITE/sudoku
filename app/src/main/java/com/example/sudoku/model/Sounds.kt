@@ -1,6 +1,5 @@
 package com.example.sudoku.model
 
-import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -28,5 +27,5 @@ class Sounds (){
     val sound3 = soundPool!!.load(context, R.raw.sound3, 1)
     val sound4 = soundPool!!.load(context, R.raw.sound4, 1)
     val clock = soundPool!!.load(context, R.raw.clock, 1)
-    val music = MediaPlayer.create(context, R.raw.ladyofthe80)
+    val music: MediaPlayer = MediaPlayer.create(context, R.raw.ladyofthe80)
 }

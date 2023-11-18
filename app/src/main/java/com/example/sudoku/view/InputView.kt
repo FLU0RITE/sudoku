@@ -1,27 +1,25 @@
 package com.example.sudoku.view
 
-import android.content.Context
-import com.example.sudoku.model.Discrimination
+import com.example.sudoku.databinding.ActivityMainBinding
 import com.example.sudoku.model.Board
 import com.example.sudoku.model.MusicPlayer
 import com.example.sudoku.model.Sounds
 
-class InputView() {
-    lateinit var binding: com.example.sudoku.databinding.ActivityMainBinding
+class InputView(val binding: ActivityMainBinding) {
     fun button(){
         binding.newB.setOnClickListener() {
-            MusicPlayer(Sounds().soundPool).playEffectSound(Sounds().sound1)
-            Board().boardInitialize()
+            MusicPlayer(Sounds().soundPool,binding).playEffectSound(Sounds().sound1)
+            Board(binding).boardInitialize()
         }
         binding.completeB.setOnClickListener {
-            MusicPlayer(Sounds().soundPool).playEffectSound(Sounds().sound2)
-            Discrimination().discriminate()
+            MusicPlayer(Sounds().soundPool,binding).playEffectSound(Sounds().sound2)
+            Board(binding).discriminate()
         }
         binding.musicButton.setOnClickListener {
-            MusicPlayer(Sounds().soundPool).musicOnOff()
+            MusicPlayer(Sounds().soundPool,binding).musicOnOff(Sounds().music)
         }
         binding.soundButton.setOnClickListener {
-            MusicPlayer(Sounds().soundPool).effetOnOff()
+            MusicPlayer(Sounds().soundPool,binding).effectOnOff()
         }
     }
 }
