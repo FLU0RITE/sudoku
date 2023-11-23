@@ -33,7 +33,7 @@ class MusicPlayer(val soundPool: SoundPool, val binding: ActivityMainBinding) {
             soundFlag = false
         } else {
             sound1234 = 0.8f
-            clockSound = 1f
+            clockSound = 2f
             binding.soundButton.setBackgroundResource(R.drawable.baseline_volume_up_24)
             soundFlag = true
         }

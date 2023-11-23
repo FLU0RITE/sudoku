@@ -11,10 +11,6 @@ class InputView(val binding: ActivityMainBinding) {
             MusicPlayer(Sounds().soundPool,binding).playEffectSound(Sounds().sound1)
             Board(binding).boardInitialize()
         }
-        binding.completeB.setOnClickListener {
-            MusicPlayer(Sounds().soundPool,binding).playEffectSound(Sounds().sound2)
-            Board(binding).discriminate()
-        }
         binding.musicButton.setOnClickListener {
             MusicPlayer(Sounds().soundPool,binding).musicOnOff(Sounds().music)
         }
