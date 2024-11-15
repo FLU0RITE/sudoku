@@ -2,20 +2,43 @@ package com.example.sudoku.view
 
 import com.example.sudoku.databinding.ActivityMainBinding
 import com.example.sudoku.model.Board
-import com.example.sudoku.model.MusicPlayer
-import com.example.sudoku.model.Sounds
+import com.example.sudoku.util.MusicPlayer
+import com.example.sudoku.util.Sounds
 
-class InputView(val binding: ActivityMainBinding) {
+class InputView(private val board: Board,private val sounds: Sounds, private val binding: ActivityMainBinding) {
+    private val musicPlayer = MusicPlayer(sounds.soundPool,binding)
     fun button(){
         binding.newB.setOnClickListener() {
-            MusicPlayer(Sounds().soundPool,binding).playEffectSound(Sounds().sound1)
+            musicPlayer.playEffectSound(sounds.sound1)
             Board(binding).boardInitialize()
         }
         binding.musicButton.setOnClickListener {
-            MusicPlayer(Sounds().soundPool,binding).musicOnOff(Sounds().music)
+            musicPlayer.musicOnOff(sounds.music)
         }
         binding.soundButton.setOnClickListener {
-            MusicPlayer(Sounds().soundPool,binding).effectOnOff()
+            musicPlayer.effectOnOff()
+        }
+        binding.completeB.setOnClickListener {
+            MusicPlayer(Sounds().soundPool, binding).playEffectSound(Sounds().sound2)
+            if (board.mistakeCount >= 3) {
+                OutputView().threeOverMistakeFail()
+            } else {
+                val successCount = (0..8).firstOrNull { i ->
+                    (0..8).any { j ->
+                        if (board.board[i][j] != board.originBoard[i][j]) {
+                            OutputView().fail()
+                            return@firstOrNull true
+                        }
+                        false
+                    }
+                }
+
+                if (successCount == null) {
+                    OutputView().success()
+                    Board(binding).boardInitialize()
+                }
+            }
         }
     }
+
 }

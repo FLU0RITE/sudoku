@@ -1,77 +1,28 @@
 package com.example.sudoku.model
 
-import android.annotation.SuppressLint
-import android.graphics.Color
-import android.media.SoundPool
-import android.os.Build.VERSION_CODES.S
 import android.os.SystemClock
 import android.widget.Button
-import android.widget.Toast
 import com.example.sudoku.R
 import com.example.sudoku.databinding.ActivityMainBinding
-import com.example.sudoku.util.App
+import com.example.sudoku.util.BoardButtons
+import com.example.sudoku.util.MusicPlayer
+import com.example.sudoku.util.Sounds
 import com.example.sudoku.view.OutputView
 import kotlin.random.Random
 
-class Board(val binding: ActivityMainBinding) {
+class Board(private val binding: ActivityMainBinding) {
     var mistakeCount = 0
-    var terminateFlag = false
+    private var terminateFlag = false
     var originBoard = Array(9) { IntArray(9) { 0 } }
     var board = Array(9) { IntArray(9) { 0 } }
-    var row = Array(10) { IntArray(10) { 0 } }
-    var col = Array(10) { IntArray(10) { 0 } }
-    var diag = Array(10) { IntArray(10) { 0 } }
+    private var row = Array(10) { IntArray(10) { 0 } }
+    private var col = Array(10) { IntArray(10) { 0 } }
+    private var diag = Array(10) { IntArray(10) { 0 } }
     var modifyStatusA = Array(9) { IntArray(9) { 0 } }
     var modifyFlag = 0
     var modifiedButton = arrayListOf<Button>()
     var mRow = -1
     var mCol = -1
-    fun discriminate() {
-
-    }
-
-    @SuppressLint("ResourceAsColor")
-    fun numberButton(selectedButton: Button, row: Int, col: Int, number: Int) {
-        selectedButton.text = "$number"
-        board[row][col] = number
-        if (originBoard[row][col] != number) {
-            mistakeCount += 1
-            binding.mistake.text = "$mistakeCount"
-            selectedButton.setTextColor(Color.RED)
-            Toast.makeText(App.context(), "${mistakeCount}회 실수", Toast.LENGTH_SHORT).show()
-        } else {
-            selectedButton.setTextColor(Color.BLUE)
-        }
-        blockColor(selectedButton, row, col)
-        if (modifyFlag == 1) {
-            modifyFlag = 0
-            modifiedButton.remove(modifiedButton[0])
-        }
-    }
-
-    @SuppressLint("ResourceAsColor")
-    fun deleteButton(selectedButton: Button, row: Int, col: Int) {
-        selectedButton.text = ""
-        board[row][col] = 0
-        blockColor(selectedButton, row, col)
-        if (modifyFlag == 1) {
-            modifyFlag = 0
-            modifiedButton.remove(modifiedButton[0])
-        }
-    }
-
-    @SuppressLint("ResourceAsColor")
-    fun hintButton(selectedButton: Button, row: Int, col: Int) {
-        selectedButton.text = "${originBoard[row][col]}"
-        board[row][col] = originBoard[row][col]
-        selectedButton.setTextColor(Color.BLUE)
-        blockColor(selectedButton, row, col)
-        if (modifyFlag == 1) {
-            modifyFlag = 0
-            modifiedButton.remove(modifiedButton[0])
-        }
-    }
-
     fun blockColor(selectedButton: Button, row: Int, col: Int) {
         if (row <= 2 && col <= 2) {
             selectedButton.setBackgroundResource(R.drawable.first_box)
@@ -88,28 +39,8 @@ class Board(val binding: ActivityMainBinding) {
         }
     }
 
-    fun makeBoard(k: Int): Boolean {
-        binding.completeB.setOnClickListener {
-            MusicPlayer(Sounds().soundPool,binding).playEffectSound(Sounds().sound2)
-            if (mistakeCount >= 3) {
-                OutputView().threeOverMistakeFail()
-            } else {
-                val successCount = (0..8).firstOrNull { i ->
-                    (0..8).any { j ->
-                        if (board[i][j] != originBoard[i][j]) {
-                            OutputView().fail()
-                            return@firstOrNull true
-                        }
-                        false
-                    }
-                }
+    private fun makeBoard(k: Int): Boolean {
 
-                if (successCount == null) {
-                    OutputView().success()
-                    Board(binding).boardInitialize()
-                }
-            }
-        }
         if (terminateFlag) {
             return true
         }
@@ -199,83 +130,7 @@ class Board(val binding: ActivityMainBinding) {
         }
         // 무작위 51개 비우기
 
-        fun keys(selectedButton: Button, row: Int, col: Int) {
-            selectedButton.setOnClickListener {
-                MusicPlayer(Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                if (modifyStatusA[row][col] == 1) {
-                    if (modifyFlag == 0) {
-                        selectedButton.setBackgroundResource(R.drawable.selected_box)
-                        modifiedButton.add(selectedButton)
-                        mRow = row
-                        mCol = col
-                        modifyFlag = 1
-                    } else {
-                        blockColor(modifiedButton[0], mRow, mCol)
-                        selectedButton.setBackgroundResource(R.drawable.selected_box)
-                        modifiedButton.remove(modifiedButton[0])
-                        modifiedButton.add(selectedButton)
-                        mRow = row
-                        mCol = col
-                        modifyFlag = 1
-                    }
-                    binding.one.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 1)
-                    }
-                    binding.two.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 2)
-                    }
-                    binding.three.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 3)
-                    }
-                    binding.four.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 4)
-                    }
-                    binding.five.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 5)
-                    }
-                    binding.six.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 6)
-                    }
-                    binding.seven.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 7)
-                    }
-                    binding.eight.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 8)
-                    }
-                    binding.nine.setOnClickListener {
-                        MusicPlayer(
-                            Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
-                        numberButton(selectedButton, row, col, 9)
-                    }
-                    binding.deleteB.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool, binding).playEffectSound(Sounds().sound3)
-                        deleteButton(selectedButton, row, col)
-                    }
-                    binding.hintB.setOnClickListener {
-                        MusicPlayer(Sounds().soundPool, binding).playEffectSound(Sounds().sound4)
-                        hintButton(selectedButton, row, col)
-                    }
-                }
-            }
-        }
-
-        val boardButtons = Buttons(binding).returnButton()
+        val boardButtons = BoardButtons(binding).returnButton()
 
         for (b in boardButtons) {
             b.setTextAppearance(R.style.myTitleText)
@@ -285,7 +140,9 @@ class Board(val binding: ActivityMainBinding) {
             for (j in 0..8) {
                 boardButtons[i * 9 + j].isEnabled = board[i][j] == 0
                 boardButtons[i * 9 + j].text = if (board[i][j] == 0) "" else "${board[i][j]}"
-                if (board[i][j] == 0) keys(selectedButton = boardButtons[i * 9 + j], i, j)
+                if (board[i][j] == 0) {
+                    InputButtons(this, binding).selectButton(selectedButton = boardButtons[i * 9 + j], i, j)
+                }
                 blockColor(boardButtons[i * 9 + j], i, j)
             }
         }
