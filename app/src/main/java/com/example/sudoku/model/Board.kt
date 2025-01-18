@@ -5,9 +5,7 @@ import android.widget.Button
 import com.example.sudoku.R
 import com.example.sudoku.databinding.ActivityMainBinding
 import com.example.sudoku.util.BoardButtons
-import com.example.sudoku.util.MusicPlayer
-import com.example.sudoku.util.Sounds
-import com.example.sudoku.view.OutputView
+import com.example.sudoku.view.InputButtons
 import kotlin.random.Random
 
 class Board(private val binding: ActivityMainBinding) {

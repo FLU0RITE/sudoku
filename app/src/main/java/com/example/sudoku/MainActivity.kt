@@ -2,7 +2,9 @@ package com.example.sudoku
 
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.Composable
 import com.example.sudoku.controller.SudokuController
 import com.example.sudoku.databinding.ActivityMainBinding
 
@@ -13,6 +15,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        SudokuController(binding).start()
+        setContent {
+            SudokuController(binding).start()
+        }
     }
 }
+
+

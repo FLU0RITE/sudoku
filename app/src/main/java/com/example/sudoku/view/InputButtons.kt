@@ -1,4 +1,4 @@
-package com.example.sudoku.model
+package com.example.sudoku.view
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -6,13 +6,14 @@ import android.widget.Button
 import android.widget.Toast
 import com.example.sudoku.R
 import com.example.sudoku.databinding.ActivityMainBinding
+import com.example.sudoku.model.Board
 import com.example.sudoku.util.App
 import com.example.sudoku.util.MusicPlayer
 import com.example.sudoku.util.Sounds
 
 class InputButtons (private var board: Board, private val binding: ActivityMainBinding){
     @SuppressLint("ResourceAsColor")
-    fun numberButton(selectedButton: Button, row: Int, col: Int, number: Int) :Board{
+    fun numberButton(selectedButton: Button, row: Int, col: Int, number: Int) : Board {
         selectedButton.text = "$number"
         board.board[row][col] = number
         if (board.originBoard[row][col] != number) {
@@ -31,7 +32,7 @@ class InputButtons (private var board: Board, private val binding: ActivityMainB
         return board
     }
 
-    fun selectButton(selectedButton: Button, row: Int, col: Int) :Board{
+    fun selectButton(selectedButton: Button, row: Int, col: Int) : Board {
         selectedButton.setOnClickListener {
             MusicPlayer(Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
             if (board.modifyStatusA[row][col] == 1) {
