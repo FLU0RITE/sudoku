@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setContent {
-            SudokuController(binding).start()
+            SudokuController(binding).Start()
         }
     }
 }

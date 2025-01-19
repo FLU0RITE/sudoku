@@ -1,5 +1,4 @@
-package com.example.sudoku.util
-
+import android.content.Context
 import android.media.MediaPlayer
 import android.media.SoundPool
 import com.example.sudoku.R
@@ -11,19 +10,33 @@ class MusicPlayer(private val soundPool: SoundPool, private val binding: Activit
     private var soundFlag = true
     private var soundStreamId: Int? = null
     private var clockSoundStreamId: Int? = null
+    private var backgroundMusic: MediaPlayer? = null
 
     fun playBackgroundMusic(music: MediaPlayer) {
-        music.isLooping = true // 무한 재생
-        music.start()
+        if (backgroundMusic == null) {
+            backgroundMusic = music
+            backgroundMusic?.isLooping = true // 반복 재생
+            backgroundMusic?.start()
+        } else if (!backgroundMusic!!.isPlaying) {
+            backgroundMusic?.start()
+        }
+    }
+
+    fun stopBackgroundMusic() {
+        backgroundMusic?.stop()
+        backgroundMusic?.release()
+        backgroundMusic = null
     }
 
     fun musicOnOff(music: MediaPlayer) {
-        if (music.isPlaying) {
-            music.pause()
-            binding.musicButton.setBackgroundResource(R.drawable.baseline_music_off_24)
-        } else {
-            music.start()
-            binding.musicButton.setBackgroundResource(R.drawable.baseline_music_note_24)
+        backgroundMusic?.let { music ->
+            if (music.isPlaying) {
+                music.pause()
+                binding.musicButton.setBackgroundResource(R.drawable.baseline_music_off_24)
+            } else {
+                music.start()
+                binding.musicButton.setBackgroundResource(R.drawable.baseline_music_note_24)
+            }
         }
     }
 
@@ -37,7 +50,7 @@ class MusicPlayer(private val soundPool: SoundPool, private val binding: Activit
             clockSoundVolume = 1f
             binding.soundButton.setBackgroundResource(R.drawable.baseline_volume_up_24)
         }
-        // 현재 재생 중인 효과음의 볼륨도 업데이트
+
         soundStreamId?.let { soundPool.setVolume(it, sound1234Volume, sound1234Volume) }
         clockSoundStreamId?.let { soundPool.setVolume(it, clockSoundVolume, clockSoundVolume) }
 
@@ -45,12 +58,15 @@ class MusicPlayer(private val soundPool: SoundPool, private val binding: Activit
     }
 
     fun playEffectSound(effectSound: Int) {
-        // 효과음 재생하고 streamId 저장
         soundStreamId = soundPool.play(effectSound, sound1234Volume, sound1234Volume, 1, 0, 1f)
     }
 
     fun playEffectClockSound(effectSound: Int) {
-        // 시계 효과음 재생하고 streamId 저장
         clockSoundStreamId = soundPool.play(effectSound, clockSoundVolume, clockSoundVolume, 1, 0, 1f)
+    }
+
+    fun release() {
+        stopBackgroundMusic()
+        soundPool.release()
     }
 }

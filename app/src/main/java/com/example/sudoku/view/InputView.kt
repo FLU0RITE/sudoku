@@ -1,8 +1,8 @@
 package com.example.sudoku.view
 
+import MusicPlayer
 import com.example.sudoku.databinding.ActivityMainBinding
 import com.example.sudoku.model.Board
-import com.example.sudoku.util.MusicPlayer
 import com.example.sudoku.util.Sounds
 
 class InputView(private val board: Board,private val sounds: Sounds, private val binding: ActivityMainBinding) {
