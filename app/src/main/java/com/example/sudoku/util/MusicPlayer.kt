@@ -12,10 +12,10 @@ class MusicPlayer(private val soundPool: SoundPool, private val binding: Activit
     private var clockSoundStreamId: Int? = null
     private var backgroundMusic: MediaPlayer? = null
 
-    fun playBackgroundMusic(music: MediaPlayer) {
+    fun playBackgroundMusic(context: Context, resId: Int) {
         if (backgroundMusic == null) {
-            backgroundMusic = music
-            backgroundMusic?.isLooping = true // 반복 재생
+            backgroundMusic = MediaPlayer.create(context, resId)
+            backgroundMusic?.isLooping = true
             backgroundMusic?.start()
         } else if (!backgroundMusic!!.isPlaying) {
             backgroundMusic?.start()
@@ -23,20 +23,22 @@ class MusicPlayer(private val soundPool: SoundPool, private val binding: Activit
     }
 
     fun stopBackgroundMusic() {
-        backgroundMusic?.stop()
-        backgroundMusic?.release()
+        backgroundMusic?.let {
+            if (it.isPlaying) {
+                it.stop()
+            }
+            it.release()
+        }
         backgroundMusic = null
     }
 
-    fun musicOnOff(music: MediaPlayer) {
-        backgroundMusic?.let { music ->
-            if (music.isPlaying) {
-                music.pause()
-                binding.musicButton.setBackgroundResource(R.drawable.baseline_music_off_24)
-            } else {
-                music.start()
-                binding.musicButton.setBackgroundResource(R.drawable.baseline_music_note_24)
-            }
+    fun musicOnOff(context: Context, resId: Int) {
+        if (backgroundMusic?.isPlaying == true) {
+            stopBackgroundMusic()
+            binding.musicButton.setBackgroundResource(R.drawable.baseline_music_off_24)
+        } else {
+            playBackgroundMusic(context, resId)
+            binding.musicButton.setBackgroundResource(R.drawable.baseline_music_note_24)
         }
     }
 
@@ -60,7 +62,6 @@ class MusicPlayer(private val soundPool: SoundPool, private val binding: Activit
     fun playEffectSound(effectSound: Int) {
         soundStreamId = soundPool.play(effectSound, sound1234Volume, sound1234Volume, 1, 0, 1f)
     }
-
     fun playEffectClockSound(effectSound: Int) {
         clockSoundStreamId = soundPool.play(effectSound, clockSoundVolume, clockSoundVolume, 1, 0, 1f)
     }
@@ -70,3 +71,4 @@ class MusicPlayer(private val soundPool: SoundPool, private val binding: Activit
         soundPool.release()
     }
 }
+

@@ -1,4 +1,4 @@
-package com.example.sudoku.view
+package com.example.sudoku.view_model
 
 import android.widget.Toast
 import com.example.sudoku.util.App

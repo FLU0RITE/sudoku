@@ -1,4 +1,4 @@
-package com.example.sudoku.view
+package com.example.sudoku.view_model
 
 import MusicPlayer
 import android.annotation.SuppressLint
@@ -12,7 +12,7 @@ import com.example.sudoku.util.App
 
 import com.example.sudoku.util.Sounds
 
-class InputButtons (private var board: Board, private val binding: ActivityMainBinding){
+class InputButtons (private var board: Board, private val binding: ActivityMainBinding,private val musicPlayer: MusicPlayer){
     @SuppressLint("ResourceAsColor")
     fun numberButton(selectedButton: Button, row: Int, col: Int, number: Int) : Board {
         selectedButton.text = "$number"
@@ -25,7 +25,7 @@ class InputButtons (private var board: Board, private val binding: ActivityMainB
         } else {
             selectedButton.setTextColor(Color.BLUE)
         }
-        Board(binding).blockColor(selectedButton, row, col)
+        Board(binding,musicPlayer).blockColor(selectedButton, row, col)
         if (board.modifyFlag == 1) {
             board.modifyFlag = 0
             board.modifiedButton.remove(board.modifiedButton[0])
@@ -35,7 +35,7 @@ class InputButtons (private var board: Board, private val binding: ActivityMainB
 
     fun selectButton(selectedButton: Button, row: Int, col: Int) : Board {
         selectedButton.setOnClickListener {
-            MusicPlayer(Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+            musicPlayer.playEffectClockSound(Sounds().clock)
             if (board.modifyStatusA[row][col] == 1) {
                 if (board.modifyFlag == 0) {
                     selectedButton.setBackgroundResource(R.drawable.selected_box)
@@ -44,7 +44,7 @@ class InputButtons (private var board: Board, private val binding: ActivityMainB
                     board.mCol = col
                     board.modifyFlag = 1
                 } else {
-                    Board(binding).blockColor(board.modifiedButton[0], board.mRow, board.mCol)
+                    Board(binding,musicPlayer).blockColor(board.modifiedButton[0], board.mRow, board.mCol)
                     selectedButton.setBackgroundResource(R.drawable.selected_box)
                     board.modifiedButton.remove(board.modifiedButton[0])
                     board.modifiedButton.add(selectedButton)
@@ -53,57 +53,48 @@ class InputButtons (private var board: Board, private val binding: ActivityMainB
                     board.modifyFlag = 1
                 }
                 binding.one.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 1)
                 }
                 binding.two.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 2)
                 }
                 binding.three.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 3)
                 }
                 binding.four.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 4)
                 }
                 binding.five.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 5)
                 }
                 binding.six.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 6)
                 }
                 binding.seven.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 7)
                 }
                 binding.eight.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 8)
                 }
                 binding.nine.setOnClickListener {
-                    MusicPlayer(
-                        Sounds().soundPool, binding).playEffectClockSound(Sounds().clock)
+                    musicPlayer.playEffectClockSound(Sounds().clock)
                     numberButton(selectedButton, row, col, 9)
                 }
                 binding.deleteB.setOnClickListener {
-                    MusicPlayer(Sounds().soundPool, binding).playEffectSound(Sounds().sound3)
-                    board = GameButtons(board,binding).deleteButton(selectedButton, row, col)
+                    musicPlayer.playEffectSound(Sounds().sound3)
+                    board = GameButtons(board,binding,musicPlayer).deleteButton(selectedButton, row, col)
                 }
                 binding.hintB.setOnClickListener {
-                    MusicPlayer(Sounds().soundPool, binding).playEffectSound(Sounds().sound4)
-                    board = GameButtons(board,binding).hintButton(selectedButton, row, col)
+                    musicPlayer.playEffectSound(Sounds().sound4)
+                    board = GameButtons(board,binding,musicPlayer).hintButton(selectedButton, row, col)
                 }
             }
         }

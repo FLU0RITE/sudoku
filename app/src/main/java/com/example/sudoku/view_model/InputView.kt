@@ -1,25 +1,26 @@
-package com.example.sudoku.view
+package com.example.sudoku.view_model
 
 import MusicPlayer
+import com.example.sudoku.R
 import com.example.sudoku.databinding.ActivityMainBinding
 import com.example.sudoku.model.Board
 import com.example.sudoku.util.Sounds
 
-class InputView(private val board: Board,private val sounds: Sounds, private val binding: ActivityMainBinding) {
-    private val musicPlayer = MusicPlayer(sounds.soundPool,binding)
+class InputView(private val board: Board,private val sounds: Sounds, private val binding: ActivityMainBinding,private val musicPlayer: MusicPlayer) {
+
     fun button(){
         binding.newB.setOnClickListener() {
             musicPlayer.playEffectSound(sounds.sound1)
             board.boardInitialize(board.selectedDifficulty?:"쉬움")
         }
         binding.musicButton.setOnClickListener {
-            musicPlayer.musicOnOff(sounds.music)
+            musicPlayer.musicOnOff(binding.root.context, R.raw.background_piano)
         }
         binding.soundButton.setOnClickListener {
             musicPlayer.effectOnOff()
         }
         binding.completeB.setOnClickListener {
-            MusicPlayer(Sounds().soundPool, binding).playEffectSound(Sounds().sound2)
+            musicPlayer.playEffectSound(Sounds().sound2)
             if (board.mistakeCount >= 3) {
                 OutputView().threeOverMistakeFail()
             } else {

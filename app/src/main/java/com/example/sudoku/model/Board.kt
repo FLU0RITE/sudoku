@@ -1,14 +1,15 @@
 package com.example.sudoku.model
 
+import MusicPlayer
 import android.os.SystemClock
 import android.widget.Button
 import com.example.sudoku.R
 import com.example.sudoku.databinding.ActivityMainBinding
 import com.example.sudoku.util.BoardButtons
-import com.example.sudoku.view.InputButtons
+import com.example.sudoku.view_model.InputButtons
 import kotlin.random.Random
 
-class Board(private val binding: ActivityMainBinding) {
+class Board(private val binding: ActivityMainBinding,private val musicPlayer: MusicPlayer) {
     var mistakeCount = 0
     private var terminateFlag = false
     var originBoard = Array(9) { IntArray(9) { 0 } }
@@ -153,7 +154,7 @@ class Board(private val binding: ActivityMainBinding) {
                 boardButtons[i * 9 + j].isEnabled = board[i][j] == 0
                 boardButtons[i * 9 + j].text = if (board[i][j] == 0) "" else "${board[i][j]}"
                 if (board[i][j] == 0) {
-                    InputButtons(this, binding).selectButton(selectedButton = boardButtons[i * 9 + j], i, j)
+                    InputButtons(this, binding,musicPlayer).selectButton(selectedButton = boardButtons[i * 9 + j], i, j)
                 }
                 blockColor(boardButtons[i * 9 + j], i, j)
             }

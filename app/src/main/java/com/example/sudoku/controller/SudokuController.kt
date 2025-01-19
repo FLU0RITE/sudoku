@@ -1,17 +1,13 @@
 package com.example.sudoku.controller
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sudoku.databinding.ActivityMainBinding
-import com.example.sudoku.model.Board
 
-import com.example.sudoku.util.Sounds
-import com.example.sudoku.view.GameView
-import com.example.sudoku.view.InputView
-import com.example.sudoku.view.StartView
+import com.example.sudoku.view_model.GameView
+import com.example.sudoku.view_model.StartView
 
 class SudokuController(private val binding: ActivityMainBinding) {
     @Composable

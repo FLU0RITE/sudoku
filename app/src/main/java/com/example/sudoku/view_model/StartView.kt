@@ -1,4 +1,4 @@
-package com.example.sudoku.view
+package com.example.sudoku.view_model
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -100,7 +100,7 @@ fun StartView(onGameStart: (String) -> Unit
                 modifier = Modifier.size(200.dp, 50.dp),
                 colors = ButtonDefaults.buttonColors(Color.Black),
             ) {
-                Text(text = "게임 시작", color = Color.White)
+                Text(text = "게임 시작",style = MaterialTheme.typography.h5, color = Color.White)
             }
 
         }
