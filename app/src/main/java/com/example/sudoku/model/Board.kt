@@ -21,6 +21,7 @@ class Board(private val binding: ActivityMainBinding) {
     var modifiedButton = arrayListOf<Button>()
     var mRow = -1
     var mCol = -1
+    var selectedDifficulty: String? = null
     fun blockColor(selectedButton: Button, row: Int, col: Int) {
         if (row <= 2 && col <= 2) {
             selectedButton.setBackgroundResource(R.drawable.first_box)
@@ -78,7 +79,7 @@ class Board(private val binding: ActivityMainBinding) {
         return false
     }
 
-    fun boardInitialize() {
+    fun boardInitialize(difficulty: String) {
         binding.clock.base = SystemClock.elapsedRealtime()
         binding.clock.start()
         // 시간 시작
@@ -120,9 +121,22 @@ class Board(private val binding: ActivityMainBinding) {
         }
 
         val temp = mutableSetOf<Int>()
-        while (temp.size < 51) {
-            temp.add(Random.nextInt(9) * 10 + Random.nextInt(9))
+        if (difficulty == "쉬움") {
+            while (temp.size < 45) {
+                temp.add(Random.nextInt(9) * 10 + Random.nextInt(9))
+            }
+        } else if (difficulty == "보통"){
+            while (temp.size < 48) {
+                temp.add(Random.nextInt(9) * 10 + Random.nextInt(9))
+            }
+        } else if (difficulty == "어려움"){
+            while (temp.size < 51) {
+                temp.add(Random.nextInt(9) * 10 + Random.nextInt(9))
+            }
+        }else {
+            throw IllegalArgumentException("잘못된 난이도입니다.")
         }
+
         for (i in temp) {
             board[i / 10][i % 10] = 0
         }

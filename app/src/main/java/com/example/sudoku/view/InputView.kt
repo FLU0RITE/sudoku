@@ -10,7 +10,7 @@ class InputView(private val board: Board,private val sounds: Sounds, private val
     fun button(){
         binding.newB.setOnClickListener() {
             musicPlayer.playEffectSound(sounds.sound1)
-            Board(binding).boardInitialize()
+            board.boardInitialize(board.selectedDifficulty?:"쉬움")
         }
         binding.musicButton.setOnClickListener {
             musicPlayer.musicOnOff(sounds.music)
@@ -35,7 +35,7 @@ class InputView(private val board: Board,private val sounds: Sounds, private val
 
                 if (successCount == null) {
                     OutputView().success()
-                    Board(binding).boardInitialize()
+                    board.boardInitialize( board.selectedDifficulty?:"쉬움")
                 }
             }
         }

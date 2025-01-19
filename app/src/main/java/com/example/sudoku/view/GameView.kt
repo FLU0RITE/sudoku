@@ -14,7 +14,7 @@ import com.example.sudoku.databinding.ActivityMainBinding
 import com.example.sudoku.model.Board
 import com.example.sudoku.util.Sounds
 
-class GameView(selectedDifficulty: String,private val binding: ActivityMainBinding) {
+class GameView(val selectedDifficulty: String,private val binding: ActivityMainBinding) {
     private val board = Board(binding)
     private val sounds = Sounds()
     private val musicPlayer = MusicPlayer(sounds.soundPool, binding)
@@ -38,7 +38,7 @@ class GameView(selectedDifficulty: String,private val binding: ActivityMainBindi
             }
         }
 
-        board.boardInitialize()
+        board.boardInitialize(selectedDifficulty)
         InputView(board,sounds,binding).button()
         AndroidView(
             factory = { context ->
